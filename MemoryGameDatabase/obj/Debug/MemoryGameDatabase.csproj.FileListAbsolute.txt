@@ -1,0 +1,5 @@
+E:\Skola-moja\Potko\MemoryGame\MemoryGameDatabase\bin\Debug\MemoryGameDatabase.dll
+E:\Skola-moja\Potko\MemoryGame\MemoryGameDatabase\bin\Debug\MemoryGameDatabase.pdb
+E:\Skola-moja\Potko\MemoryGame\MemoryGameDatabase\obj\Debug\MemoryGameDatabase.csprojResolveAssemblyReference.cache
+E:\Skola-moja\Potko\MemoryGame\MemoryGameDatabase\obj\Debug\MemoryGameDatabase.dll
+E:\Skola-moja\Potko\MemoryGame\MemoryGameDatabase\obj\Debug\MemoryGameDatabase.pdb

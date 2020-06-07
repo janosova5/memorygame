@@ -1,0 +1,8 @@
+E:\Skola-moja\Potko\MemoryGame\MemoryGameServer\bin\Debug\MemoryGameServer.exe.config
+E:\Skola-moja\Potko\MemoryGame\MemoryGameServer\bin\Debug\MemoryGameServer.exe
+E:\Skola-moja\Potko\MemoryGame\MemoryGameServer\bin\Debug\MemoryGameServer.pdb
+E:\Skola-moja\Potko\MemoryGame\MemoryGameServer\obj\Debug\MemoryGameServer.csprojResolveAssemblyReference.cache
+E:\Skola-moja\Potko\MemoryGame\MemoryGameServer\obj\Debug\MemoryGameServer.exe
+E:\Skola-moja\Potko\MemoryGame\MemoryGameServer\obj\Debug\MemoryGameServer.pdb
+E:\Skola-moja\Potko\MemoryGame\MemoryGameServer\bin\Debug\MemoryGameLogic.dll
+E:\Skola-moja\Potko\MemoryGame\MemoryGameServer\bin\Debug\MemoryGameLogic.pdb
