@@ -27,7 +27,6 @@ namespace MemoryGameClient
         private DispatcherTimer _matchTimer;
         private Image _firstClickedImage;
         private Image _secondClickedImage;
-       // private GameViewModel _viewModel;
         private bool _firstPlayerTurn;
         private bool _wasMatch;
         private bool _secondCardWasClicked;
@@ -52,36 +51,21 @@ namespace MemoryGameClient
             _secondCardTimer = new DispatcherTimer();
             _secondCardTimer.Tick += SecondCardTimerTick;
             _secondCardTimer.Interval = TimeSpan.FromSeconds(1);
-            //_matchTimer = new DispatcherTimer();
-            //_matchTimer.Tick += MatchTimerTick;
-            //_matchTimer.Interval = TimeSpan.FromSeconds(3);
-            //_matchTimer.Start();
 
-            //view model su len karty
-            //_viewModel = new GameViewModel();
-            //tu sa bude context mapovat na hracov, ktori su na serveri -> memoryGameProxy.GetPlayer, SetPlayer
-            //FirstNameLabelPlayer1.DataContext = _viewModel.Player1;
-            //ScorePlayer1.DataContext = _viewModel.Player1;
-            //FirstNameLabelPlayer2.DataContext = _viewModel.Player2;
-            //ScorePlayer2.DataContext = _viewModel.Player2;
-            //var player = _memoryGameProxy.GetPlayer1();
-            //FirstNameLabelPlayer1.DataContext = _memoryGameProxy.GetPlayer1();
         }
 
-        //private void MatchTimerTick(object sender, EventArgs e)
-        //{
-        //    //kazde 3 sekundy kontroluje, ci bola zhoda karticiek
-        //    if (!_memoryGameProxy.GetMatch())
-        //    {
-        //        //ak nie, zakryje druhu karticku
-        //        var name = _memoryGameProxy.GetSecondCardName();
-        //        if (name != "")
-        //        {
-        //            var image = (Image)FindName(name);
-        //            image.Source = new BitmapImage(new Uri(uri));
-        //        }
-        //    }
-        //}
+        private void MatchTimerTick(object sender, EventArgs e)
+        {
+            if (!_memoryGameProxy.GetMatch())
+            {
+                var name = _memoryGameProxy.GetSecondCardName();
+                if (name != "")
+                {
+                    var image = (Image)FindName(name);
+                    image.Source = new BitmapImage(new Uri(uri));
+                }
+            }
+        }
 
         private void GameTimerTick(object sender, EventArgs e)
         {
@@ -89,8 +73,8 @@ namespace MemoryGameClient
             {
                 FillCoverPictures();
             }
-            //kontroluje, ci bola kliknuta 1.karta, ak ano nastavi jej obrazok a spusti timer
-            if (_memoryGameProxy.GetFirstCardTimer()) //1.karta bola kliknuta
+    
+            if (_memoryGameProxy.GetFirstCardTimer()) 
             {
                 var name = _memoryGameProxy.GetFirstCardName();
                 var index = GetImageIndexForCard(name);
@@ -102,8 +86,8 @@ namespace MemoryGameClient
             {
                 _firstCardTimer.Stop();
             }
-            //kontroluje, ci bola kliknuta 2.karta, ak ano nastavi jej obrazok a spusti timer
-            if (_memoryGameProxy.GetSecondCardTimer()) //2.karta bola kliknuta
+
+            if (_memoryGameProxy.GetSecondCardTimer()) 
             {
                 var name = _memoryGameProxy.GetSecondCardName();
                 var index = GetImageIndexForCard(name);
@@ -143,7 +127,7 @@ namespace MemoryGameClient
             {
                 FirstNameLabelPlayer2.Content = player2Name;
                 WhoseTurnLabel.Content = player1Name + "'s turn";
-                //na server posielat len indexy jednotlivych obrazkov a nie cele obrazky, lebo pretecie buffer
+
                 if (_memoryGameProxy.GetCardImages().Images.Count > 0)
                 {
                     FillCoverPictures();
@@ -172,74 +156,29 @@ namespace MemoryGameClient
             Image16.Source = new BitmapImage(new Uri(uri));
             Image17.Source = new BitmapImage(new Uri(uri));
             Image18.Source = new BitmapImage(new Uri(uri));
-            //Console.WriteLine(Image1.Source.Height);
-            //Image2.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image3.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image4.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image5.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image6.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image7.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image8.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image9.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image10.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image11.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image12.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image13.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image14.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image15.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image16.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image17.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-            //Image18.Source = new BitmapImage(new Uri(uri, UriKind.Relative));
-
         }
 
         private void FirstCardTimerTick(object sender, EventArgs e)
         {
-            //kazdu sekundu sa kontroluje, ci sa text na serveri zmenil 
-            //if (memoryGameProxy.GetMessage() != "Hello ")
-            //{  
-            //ak ano, do labelu sa nastavi text zo servera
-            //label.Content = memoryGameProxy.GetMessage();
-            // }
-
-            //secondCard != null namiesto secondCardWasClicked
-           if (_memoryGameProxy.GetSecondCardName() != "") //caka, kym nebude kliknuta druha karticka
+           if (_memoryGameProxy.GetSecondCardName() != "")
            {
-                //tu prebehne porovnanie prvej s druhou a ak nie su rovnake, prva zmizne
-                //tu zavolam metodu GetImageSourceHashCode(_memoryGameProxy.GetFirstImageName())
                if (GetImageSourceHashCode(_memoryGameProxy.GetFirstCardName()) == GetImageSourceHashCode(_memoryGameProxy.GetSecondCardName()))
-               //if (_secondClickedImage.Source.GetHashCode() == _firstClickedImage.Source.GetHashCode())
                {
                    _memoryGameProxy.SetFirstCardTimer(false);
                    _memoryGameProxy.SetFirstCardName("");
-                    //_firstClickedImage = null;
                    _memoryGameProxy.SetMatch(true);
-                    //_wasMatch = true;
                }
                else
                {
-                    // _firstClickedImage.Source = new BitmapImage(new Uri(uri));
                    _memoryGameProxy.SetFirstCardTimer(false);
                    _memoryGameProxy.SetFirstCardName("");
                    _memoryGameProxy.SetMatch(false);
-                    //_firstCardTimer.Stop();
-                    //_firstClickedImage = null;
                 }
-                //    _secondCardWasClicked = false;
             }
             
         }
         private void SecondCardTimerTick(object sender, EventArgs e)
         {
-            //kazdu sekundu sa kontroluje, ci sa text na serveri zmenil 
-            //if (memoryGameProxy.GetMessage() != "Hello ")
-            //{  
-            //ak ano, do labelu sa nastavi text zo servera
-            //label.Content = memoryGameProxy.GetMessage();
-            // }
-
-            //if (_secondTime.AddSeconds(1) > DateTime.Now)
-           // {
            if (_memoryGameProxy.GetMatch())
            {
                _memoryGameProxy.SetSecondCardTimer(false);
@@ -256,32 +195,18 @@ namespace MemoryGameClient
                    WhoseTurnLabel.Content = _memoryGameProxy.GetPlayer2().FirstName + "'s turn";
                 }
                 _memoryGameProxy.SetMatch(false);
-                //_secondClickedImage = null;
-                // _secondCardWasClicked = false;
-
-                // _wasMatch = false;
-                //_secondCardTimer.Stop();
-                //_secondClickedImage = null;
-                //_secondCardWasClicked = false;
-                //_wasMatch = false;
             }
-            else //nebola zhoda obrazkov
+            else 
             {
-                //zakryje druhy obrazok
                 var name = _memoryGameProxy.GetSecondCardName();
                 if (name != "")
                 {
                     var image = (Image)FindName(name);
                     image.Source = new BitmapImage(new Uri(uri));
                 }
-               // _secondClickedImage.Source = new BitmapImage(new Uri(uri));
-                 //   _secondCardTimer.Stop();
-                 //stopne timer
                 _memoryGameProxy.SetSecondCardTimer(false);
-                //vyresetuje druhu kartu
                 _memoryGameProxy.SetSecondCardName("");
-                //_secondClickedImage = null;
-                    //_secondCardWasClicked = false;
+                
                 if (_memoryGameProxy.GetFirstPlayerTurn())
                 {
                     _memoryGameProxy.SetFirstPlayerTurn(false);
@@ -290,29 +215,17 @@ namespace MemoryGameClient
                 else
                 {
                     _memoryGameProxy.SetFirstPlayerTurn(true);
-                    //_firstPlayerTurn = true;
                     WhoseTurnLabel.Content = _memoryGameProxy.GetPlayer2().FirstName + "'s turn";
                 }
-                    //_firstPlayerTurn = !_firstPlayerTurn;
-                    
-                    //_secondPlayerTurn = true;
             }
-                
-               
-           // }
-
         }
 
         private void StartGameButtonWasClicked(object sender, RoutedEventArgs e)
         {
-            //text z textboxu sa posle na server
-            // memoryGameProxy.SetMessage(textBox.Text);
-
-            //_wasStart je pre jedneho hraca, to zostava tu 
             if (_wasStartClicked) return;
             _wasStartClicked = true;
             var firstName = FirstNameTextBox.Text;
-            //tu sa potom bude kontrolovat ci tam je prvy hrac na SERVERI !
+            
             if (_memoryGameProxy.GetPlayer1().FirstName == "Player1")
             {
                 _memoryGameProxy.SetPlayer1FirstName(firstName);
@@ -320,7 +233,6 @@ namespace MemoryGameClient
             else if (_memoryGameProxy.GetPlayer2().FirstName == "Player2")
             {
                 _memoryGameProxy.SetPlayer2FirstName(firstName);
-                //az ked pride druhy hrac, karty sa zamiesaju a zakryju cover obrazkom
                 _memoryGameProxy.PrepareCardImages();
             }
             
@@ -340,45 +252,15 @@ namespace MemoryGameClient
         {
             if (_memoryGameProxy.GetFirstCardName() == "")
             {
-                //nastav jej meno
                 _memoryGameProxy.SetFirstCardName(image.Name);
-                //nastav, ze prva karta bola kliknuta
                 _memoryGameProxy.SetFirstCardClicked(true);
-                //posli na server, ze treba odstartovat timer pre prvu kartu
                 _memoryGameProxy.SetFirstCardTimer(true);
             }
-           // if (_firstClickedImage == null)
-           // {
-               // var myImage = (Image)FindName("Image01"); 
-              //  _firstClickedImage = image;
-                //tu nastavi karte na serveri, ze je kliknuta, ale nebude jej este priamo tu nastavovat obrazok
-                //obrazok jej nastavi timer, ktory bude kazdu sekundu sledovat stav vsetkych kariet a nastavovat im obrazky podla ich stavu
-                //pribudne nova trieda Card - bool uhadnuta, bool kliknuta, BitmapImage image a string name
-                //na serveri bude List<Card>
-                //timer bude sledovat ich stavy - uhadnuta, kliknuta a podla toho menit kazdej images
-                //uhadnutym sa nastavi uhadnuty obrazok a vymazu sa z tohto listu, nech zbytocne nezavadzaju
-                //pri kliknuti na kartu pozname jej meno = podla mena sa kazdej karte nastavi stav
-                //logika, ktora je tu vo view zostava rovnaka s tym rozdielom, ze stavy a obrazky karticiek sa nebudu menit tu ale
-                //NA SERVERI !!!!!
-                //ALEBO
-                //sa na server posle len prva a druha karticka a timer nastavi ich obrazky podla ich stavu !!!!!
-//            }
             else if (_memoryGameProxy.GetSecondCardName() == "")
             {
-                //nastav jej meno
                 _memoryGameProxy.SetSecondCardName(image.Name);
-                //nastav, ze prva karta bola kliknuta
                 _memoryGameProxy.SetSecondCardClicked(true);
-                //posli na server, ze treba odstartovat timer pre prvu kartu
                 _memoryGameProxy.SetSecondCardTimer(true);
-
-                //_secondClickedImage = image;
-                //_secondClickedImage.Source = _viewModel.Images.Images[index];
-                //_secondCardTimer = new DispatcherTimer();
-                //_secondCardTimer.Tick += SecondCardTimerTick;
-                //_secondCardTimer.Interval = TimeSpan.FromSeconds(1);
-                //_secondCardWasClicked = true;
-                //_secondCardTimer.Start();
             }
            
                
@@ -386,15 +268,10 @@ namespace MemoryGameClient
 
         private void ResetGame()
         {
-            //kto je na rade tiez PRIDAT NA SERVER
             _firstPlayerTurn = true;
             _memoryGameProxy.SetFirstCardClicked(false);
-            //_firstClickedImage = null;
             _memoryGameProxy.SetSecondCardClicked(false);
-            //_secondClickedImage = null;
-            //match PRIDAT NA SERVER
             _wasMatch = false;
-            //asi netreba, ked je secondClickedImage
             _secondCardWasClicked = false;
         }
 
@@ -478,7 +355,6 @@ namespace MemoryGameClient
         {
             ResetGame();
             _memoryGameProxy.ResetScore();
-            //ten kto stlaci restart, posle na server nove rozmiestnenie karticiek
             _memoryGameProxy.PrepareCardImages();
             _memoryGameProxy.SetRestart(true);
         }
