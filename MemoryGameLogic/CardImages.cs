@@ -5,10 +5,9 @@ using System.Windows.Media.Imaging;
 
 namespace MemoryGameLogic
 {
-    //NA SERVER POSIELAT MAX NEJAKY LIST, V KTOROM BUDU CISLA, KTORE BUDU SIGNALIZOVAT ZAMIESANIE KARIET ?
-    //NA SERVER NEMOZEM POSIELAT LIST OBRAZKOV, LEBO PRETECIE BUFFER !!!!!!
+    
     [DataContract]
-    public class CardImages //premenovat na CardImages
+    public class CardImages 
     {
         [DataMember]
         public List<BitmapImage> Images { get; set; }
@@ -48,7 +47,6 @@ namespace MemoryGameLogic
 
         }
 
-        //source -  http://www.vcskicks.com/randomize_array.php
         public void ShuffleList()
         {
             List<BitmapImage> randomList = new List<BitmapImage>();
