@@ -21,30 +21,6 @@ namespace MemoryGameServer
             Images = new CardImages();
             AdditionalData = new Data();
         }
-        //static MemoryGameService()
-        //{
-        //    text = new Text();
-        //}
-
-        //private static readonly Text text;
-
-        //public string GetMessage()
-        //{
-        //    lock (text)
-        //    {
-        //        return "Hello " + text.Message;
-        //    }
-
-        //}
-
-        //public void SetMessage(string textFromTextBox)
-        //{
-        //    lock (text)
-        //    {
-        //        text.Message = textFromTextBox;
-        //    }
-
-        //}
 
         public Player GetPlayer1()
         {
